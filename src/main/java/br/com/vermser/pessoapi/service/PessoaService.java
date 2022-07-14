@@ -40,6 +40,16 @@ public class PessoaService {
                                 + " não existe"));
     }
 
+    public PessoaDTO buscarUsuarioPorCpf(String cpf) throws Exception {
+        Pessoa pessoa = PessoaRepository.getListaPessoas()
+                .stream()
+                .filter(p -> p.getCpf().equals(cpf))
+                .findFirst()
+                .orElseThrow( () -> new RegraDeNegocioException("Pessoa com cpf " + cpf
+                        + " não existe"));
+        return converterPessoaParaPessoaDTO(pessoa);
+    }
+
     public PessoaDTO getPessoaPorId(Integer idPessoa) throws Exception {
         return converterPessoaParaPessoaDTO(buscarUsuarioPorId(idPessoa));
     }
