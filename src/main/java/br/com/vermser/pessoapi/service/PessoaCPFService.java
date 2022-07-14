@@ -81,4 +81,19 @@ public class PessoaCPFService {
         return pessoaCPFDTO;
     }
 
+    public void delete(Integer idUser) throws Exception {
+        PessoaCPFDTO pessoaCPFDTO = getById(idUser);
+
+
+        try {
+            client.delete(pessoaCPFDTO.getCpf());
+        } catch (Exception e){
+            System.out.println("PROVAVEL ERROR / USUARIO NAO CADASTROU DADOS");
+        }
+
+        pessoaService.delete(idUser);
+
+
+    }
+
 }

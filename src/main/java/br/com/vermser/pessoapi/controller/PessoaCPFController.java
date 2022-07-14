@@ -31,4 +31,9 @@ public class PessoaCPFController {
         return pessoaCPFService.getByCpf(cpf);
     }
 
+    @GetMapping("/delete/{idUser}")
+    public void delete(@PathVariable Integer idUser) throws Exception {
+        pessoaCPFService.delete(idUser);
+    }
+
 }
