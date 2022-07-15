@@ -35,7 +35,7 @@ public class DadosPessoaisDTO {
     @NotEmpty
     private String rg;
 
-    @NotEmpty
+    @NotNull
     private Sexo sexo;
 
     @NotEmpty

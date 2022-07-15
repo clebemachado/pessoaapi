@@ -3,8 +3,7 @@ package br.com.vermser.pessoapi.controller;
 import br.com.vermser.pessoapi.client.DadosPessoaisClient;
 import br.com.vermser.pessoapi.documentation.DocumentationDadosPessoaController;
 import br.com.vermser.pessoapi.dto.dadosPessoais.DadosPessoaisDTO;
-import feign.Param;
-import feign.RequestLine;
+import br.com.vermser.pessoapi.service.DadosPessoaisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,32 +18,34 @@ import java.util.List;
 public class DadosPessoaisController implements DocumentationDadosPessoaController {
 
     @Autowired
-    private DadosPessoaisClient client;
+    private DadosPessoaisService dadosPessoaisService;
 
     @GetMapping("/dados-pessoais/{cpf}")
     public DadosPessoaisDTO get(@PathVariable String cpf){
-        return client.get(cpf);
+
+        return dadosPessoaisService.get(cpf);
     };
 
     @GetMapping
     public List<DadosPessoaisDTO> getListPessoas(){
-        return client.getAll();
+        return dadosPessoaisService.getListPessoas();
     }
 
     @PostMapping
-    public ResponseEntity<DadosPessoaisDTO> create(@Valid @RequestBody DadosPessoaisDTO dadosPessoaisDTO){
-        return ResponseEntity.ok(client.post(dadosPessoaisDTO));
+    public ResponseEntity<DadosPessoaisDTO> create(@Valid @RequestBody DadosPessoaisDTO dadosPessoaisDTO)
+    {
+        return ResponseEntity.ok(dadosPessoaisService.create(dadosPessoaisDTO));
     }
 
     @PutMapping("/{cpf}")
     public ResponseEntity<DadosPessoaisDTO> put(@PathVariable String cpf,
                                 @RequestBody  DadosPessoaisDTO dadosPessoaisDTO){
-        return ResponseEntity.ok(client.put(cpf, dadosPessoaisDTO));
+        return ResponseEntity.ok(dadosPessoaisService.put(cpf, dadosPessoaisDTO));
     };
 
     @DeleteMapping("/dados-pessoais/{cpf}")
     public void delete(@PathVariable String cpf){
-        client.delete(cpf);
+        dadosPessoaisService.delete(cpf);
     }
 
 }

@@ -33,6 +33,14 @@ public class PessoaCPFService {
         return objectMapper.convertValue(dp, PessoaCPFDTO.class);
     }
 
+    private PessoaDTO pCPFconvert2PCPFDTO(PessoaCPFDTO pessoaCPFDTO){
+        return objectMapper.convertValue(pessoaCPFDTO, PessoaDTO.class);
+    }
+
+    private DadosPessoaisDTO dadosPessoaconvertDPDTO(DadosPessoais dadosPessoais){
+        return objectMapper.convertValue(dadosPessoais, DadosPessoaisDTO.class);
+    }
+
     public List<PessoaCPFDTO> list(){
         List<PessoaCPFDTO> pessoaCPFS = new ArrayList<>();
 
@@ -40,6 +48,7 @@ public class PessoaCPFService {
             PessoaCPF pessoaCPF = new PessoaCPF();
             pessoaCPF = pDTOconvertPCPF(p);
             DadosPessoaisDTO dadosPessoais = new DadosPessoaisDTO();
+
             try {
                 dadosPessoais = client.get(p.getCpf());
             } catch (Exception e){
@@ -83,8 +92,6 @@ public class PessoaCPFService {
 
     public void delete(Integer idUser) throws Exception {
         PessoaCPFDTO pessoaCPFDTO = getById(idUser);
-
-
         try {
             client.delete(pessoaCPFDTO.getCpf());
         } catch (Exception e){
@@ -92,8 +99,13 @@ public class PessoaCPFService {
         }
 
         pessoaService.delete(idUser);
+    }
 
-
+    public PessoaCPFDTO create(PessoaCPFDTO pessoaCPFDTO) throws Exception {
+        client.post(pessoaCPFDTO.getDadosPessoais());
+        PessoaDTO pessoaDTO = pessoaService.create(pCPFconvert2PCPFDTO(pessoaCPFDTO));
+        pessoaCPFDTO.setIdPessoa(pessoaCPFDTO.getIdPessoa());
+        return pessoaCPFDTO;
     }
 
 }
