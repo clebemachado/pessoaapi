@@ -3,9 +3,10 @@ package br.com.vermser.pessoapi.service;
 import br.com.vermser.pessoapi.client.DadosPessoaisClient;
 import br.com.vermser.pessoapi.dto.dadosPessoais.DadosPessoaisDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class DadosPessoaisService {
 
     @Autowired
